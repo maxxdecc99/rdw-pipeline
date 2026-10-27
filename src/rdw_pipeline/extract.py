@@ -26,13 +26,26 @@ def fetch_count(year):
     count = first["count"]
     return int(count)
 
+def fetch_all(year, page_size=1000):
+    page_list = []
+    offset = 0
+    while True:
+        page = fetch_page(offset, page_size, year)
+
+        if not page:
+            break
+
+        page_list.extend(page)
+        offset += page_size
+
+    return page_list
+
+
+
 if __name__ == "__main__":
-    print(fetch_count(2015))
+    records = fetch_all(2015)
+    kentekens = [r["kenteken"] for r in records]
 
-    a = fetch_page(0, 3, 2015)
-    b = fetch_page(3, 3, 2015)
-    c = fetch_page(0, 6, 2015)
-
-    print([r["kenteken"] for r in a])
-    print([r["kenteken"] for r in b])
-    print([r["kenteken"] for r in c])
+    print("verwacht:", fetch_count(2015))
+    print("opgehaald:", len(records))
+    print("uniek:", len(set(kentekens)))
