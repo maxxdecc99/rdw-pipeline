@@ -7,6 +7,7 @@ def fetch_sample(limit=5):
     params = {
         "$where": "merk='VOLKSWAGEN' AND handelsbenaming in ('UP!', 'UP')",
         "$limit": limit,
+        "$order": "kenteken",
     }
     response = requests.get(BASE_URL, params=params, timeout=30)
     response.raise_for_status()
