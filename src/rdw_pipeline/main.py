@@ -19,7 +19,7 @@ def main():
     elif before == fetched == unique:
         print(f"compleet: {fetched} records")
     else:
-        print(f"FOUT: voor={before}, opgehaald={fetched}, uniek={unique}")
+        raise SystemExit(f"FOUT: voor={before}, opgehaald={fetched}, uniek={unique}")
 
     parquet_path, rows = raw_to_parquet(raw_path)
     print("parquet geschreven:", parquet_path, f"({rows} rijen)")
