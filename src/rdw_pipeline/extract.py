@@ -1,3 +1,5 @@
+from enum import UNIQUE
+
 import requests
 import json
 from datetime import date
@@ -72,13 +74,19 @@ def save_raw(records, year):
 
 
 if __name__ == "__main__":
-
+    before = fetch_count(2015)
     records = fetch_all(2015)
-    kentekens = [r["kenteken"] for r in records]
+    after = fetch_count(2015)
+
+    fetched = len(records)
+    unique = len(set([r["kenteken"] for r in records]))
 
     path = save_raw(records, 2015)
     print("opgeslagen:", path)
 
-    print("verwacht:", fetch_count(2015))
-    print("opgehaald:", len(records))
-    print("uniek:", len(set(kentekens)))
+    if before != after:
+        print(f"WAARSCHUWING: bron veranderd tijdens ophalen (voor: {before}, na: {after})")
+    elif before == unique == fetched:
+        print(f"compleet: {fetched} records")
+    else:
+        print(f"FOUT: voor={before}, opgehaald={fetched}, uniek={unique}")
