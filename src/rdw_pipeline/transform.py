@@ -28,8 +28,3 @@ def raw_to_parquet(raw_path):
     df.to_parquet(out_path, index=False)
 
     return out_path, len(df)
-
-if __name__ == "__main__":
-    out_path, rows = raw_to_parquet("data/raw/up_2015_2026-10-28.json")
-    print("geschreven:", out_path)
-    print("rijen:", rows)

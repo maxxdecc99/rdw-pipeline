@@ -71,22 +71,3 @@ def save_raw(records, year):
     with open(path, "w") as f:
         json.dump(records, f)
     return path
-
-
-if __name__ == "__main__":
-    before = fetch_count(2015)
-    records = fetch_all(2015)
-    after = fetch_count(2015)
-
-    fetched = len(records)
-    unique = len(set([r["kenteken"] for r in records]))
-
-    path = save_raw(records, 2015)
-    print("opgeslagen:", path)
-
-    if before != after:
-        print(f"WAARSCHUWING: bron veranderd tijdens ophalen (voor: {before}, na: {after})")
-    elif before == unique == fetched:
-        print(f"compleet: {fetched} records")
-    else:
-        print(f"FOUT: voor={before}, opgehaald={fetched}, uniek={unique}")
