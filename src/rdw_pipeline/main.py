@@ -1,5 +1,6 @@
 from rdw_pipeline.extract import fetch_count, fetch_all, save_raw
 from rdw_pipeline.transform import raw_to_parquet
+from rdw_pipeline.load import upload
 
 YEAR = 2015
 
@@ -23,6 +24,9 @@ def main():
 
     parquet_path, rows = raw_to_parquet(raw_path)
     print("parquet geschreven:", parquet_path, f"({rows} rijen)")
+
+    gcs_uri = upload(parquet_path)
+    print("geüpload naar:", gcs_uri)
 
 if __name__ == "__main__":
     main()
